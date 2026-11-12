@@ -136,3 +136,66 @@ def test_transfer_host_and_disband():
     room, msg = RoomService.leave_room(room.code, token2)
     assert room.status == "abandoned"
     assert "Chủ phòng" in msg
+
+def test_local_room_win_updates_session_scores_and_restarts():
+    local_players = [
+        {"name": "An", "color": "#FF9966"},
+        {"name": "Bình", "color": "#FFE1BA"}
+    ]
+    room, host, token = RoomService.create_room("caro", "An", is_local=True, local_players=local_players)
+
+    # Match 1: Player 0 wins with 5 in a row
+    moves = [
+        (0, (7, 5)),
+        (1, (8, 5)),
+        (0, (7, 6)),
+        (1, (8, 6)),
+        (0, (7, 7)),
+        (1, (8, 7)),
+        (0, (7, 8)),
+        (1, (8, 8)),
+        (0, (7, 9)), # Win!
+    ]
+    for p_idx, (r, c) in moves:
+        room, event = RoomService.process_action(room.code, token, {"type": "place_piece", "row": r, "col": c})
+
+    assert room.status == "finished"
+    assert room.winner["player_index"] == 0
+    assert room.session_scores.get("0") == 1
+    assert room.game_state.get("session_scores", {}).get("0") == 1
+
+    # Restart game with local token
+    restarted = RoomService.restart_game(room.code, token)
+    assert restarted.status == "playing"
+    assert restarted.winner is None
+    assert restarted.session_scores.get("0") == 1
+    assert restarted.game_state.get("session_scores", {}).get("0") == 1
+    stones = sum(1 for row in restarted.game_state["grid"] for cell in row if cell is not None)
+    assert stones == 0
+
+    # Match 2: Player 1 wins
+    moves2 = [
+        (0, (6, 5)),
+        (1, (8, 5)),
+        (0, (6, 6)),
+        (1, (8, 6)),
+        (0, (6, 7)),
+        (1, (8, 7)),
+        (0, (6, 8)),
+        (1, (8, 8)),
+        (0, (5, 5)),
+        (1, (8, 9)), # Win!
+    ]
+    for p_idx, (r, c) in moves2:
+        restarted, event = RoomService.process_action(restarted.code, token, {"type": "place_piece", "row": r, "col": c})
+
+    assert restarted.status == "finished"
+    assert restarted.winner["player_index"] == 1
+    assert restarted.session_scores == {"0": 1, "1": 1}
+    assert restarted.game_state.get("session_scores") == {"0": 1, "1": 1}
+
+    # Request rematch in local mode immediately restarts
+    re_rematch, ok, msg = RoomService.request_rematch(restarted.code, token)
+    assert ok is True
+    assert re_rematch.status == "playing"
+    assert re_rematch.session_scores == {"0": 1, "1": 1}

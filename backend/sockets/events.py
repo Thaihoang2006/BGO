@@ -38,6 +38,7 @@ def broadcast_game_state(room: Room, event_name: str, event_data: dict = None, e
             "game_state": safe_state,
             "status": room.status,
             "winner": room.winner,
+            "session_scores": room.session_scores,
             "room": room.to_dict(viewer_token=tok)
         }
         if event_data:

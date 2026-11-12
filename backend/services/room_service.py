@@ -110,7 +110,7 @@ class RoomService:
             first_player = None
             players_objs = []
             for idx, p in enumerate(players_data):
-                tok = secrets.token_hex(16)
+                tok = host_token if idx == 0 else secrets.token_hex(16)
                 p_name = p.get("name", f"Người chơi {idx + 1}").strip() or f"Người chơi {idx + 1}"
                 color = p.get("color", DEFAULT_PALETTE_COLORS[idx % len(DEFAULT_PALETTE_COLORS)])
                 symbol = DEFAULT_SYMBOLS[idx % len(DEFAULT_SYMBOLS)]
@@ -334,13 +334,16 @@ class RoomService:
             raise ValueError("Ván chơi chưa bắt đầu hoặc đã kết thúc")
 
         # Authorization check
-        player = next((p for p in room.players if p.participant_token == participant_token), None)
+        if room.is_local and (participant_token == room.host_token or any(p.participant_token == participant_token for p in room.players)):
+            current_player_idx = room.game_state.get("current_player", 0)
+            player = next((p for p in room.players if p.player_index == current_player_idx), None)
+            if not player and room.players:
+                player = room.players[0]
+        else:
+            player = next((p for p in room.players if p.participant_token == participant_token), None)
+
         if not player:
-            if room.is_local and room.host_token == participant_token:
-                current_player_idx = room.game_state.get("current_player", 0)
-                player = next((p for p in room.players if p.player_index == current_player_idx), None)
-            if not player:
-                raise ValueError("Xác thực người chơi thất bại")
+            raise ValueError("Xác thực người chơi thất bại")
 
         if getattr(player, "is_spectator", False):
             raise ValueError("Khán giả không thể thực hiện hành động trong trận đấu.")
@@ -361,7 +364,6 @@ class RoomService:
         # Apply action
         new_state, event_data = engine.apply_action(current_state, player_index, action)
 
-        room.game_state = new_state
         room.state_version += 1
         now_str = datetime.datetime.now(datetime.timezone.utc).isoformat()
         room.updated_at = now_str
@@ -376,13 +378,22 @@ class RoomService:
             winner_json = json.dumps(room.winner, ensure_ascii=False) if room.winner else None
 
             # Increment session match scores
-            if room.winner and room.winner.get("player_index") is not None:
-                win_idx = str(room.winner["player_index"])
+            if room.winner:
                 curr_scores = room.session_scores
-                curr_scores[win_idx] = curr_scores.get(win_idx, 0) + 1
+                if room.winner.get("player_index") is not None:
+                    win_idx = str(room.winner["player_index"])
+                    curr_scores[win_idx] = curr_scores.get(win_idx, 0) + 1
+                elif room.winner.get("team"):
+                    team = room.winner.get("team")
+                    for p in new_state.get("players", []):
+                        if p.get("role") == team:
+                            idx_str = str(p["player_index"])
+                            curr_scores[idx_str] = curr_scores.get(idx_str, 0) + 1
                 room.session_scores = curr_scores
                 scores_json = room.session_scores_data
 
+        new_state["session_scores"] = room.session_scores
+        room.game_state = new_state
         state_json = json.dumps(new_state, ensure_ascii=False)
         db.execute(
             """
@@ -420,6 +431,7 @@ class RoomService:
             initial_state = engine.create_initial_state(engine_players, options=room.settings)
         else:
             initial_state = engine.create_initial_state(engine_players)
+        initial_state["session_scores"] = room.session_scores
         state_json = json.dumps(initial_state, ensure_ascii=False)
         now_str = datetime.datetime.now(datetime.timezone.utc).isoformat()
         new_version = room.state_version + 1
@@ -448,7 +460,15 @@ class RoomService:
         if not room:
             raise ValueError("Phòng không tồn tại")
 
+        if room.is_local:
+            # In local hotseat mode, any participant from the room or the host is authorized
+            if participant_token == room.host_token or any(p.participant_token == participant_token for p in room.players):
+                return RoomService._do_restart(room)
+
         player = next((p for p in room.players if p.participant_token == participant_token), None)
+        if not player and room.host_token == participant_token:
+            player = next((p for p in room.players if p.is_host), None)
+
         if not player or not player.is_host:
             raise ValueError("Chỉ chủ phòng mới có thể bắt đầu lại ván chơi")
 
@@ -462,7 +482,12 @@ class RoomService:
 
         player = next((p for p in room.players if p.participant_token == participant_token), None)
         if not player:
-            raise ValueError("Người chơi không thuộc phòng này")
+            if room.is_local and (participant_token == room.host_token or any(p.participant_token == participant_token for p in room.players)):
+                player = room.players[0] if room.players else None
+            elif room.host_token == participant_token:
+                player = next((p for p in room.players if p.is_host), None)
+            if not player:
+                raise ValueError("Người chơi không thuộc phòng này")
 
         if getattr(player, "is_spectator", False):
             raise ValueError("Khán giả không tham gia biểu quyết tái đấu.")

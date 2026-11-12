@@ -211,6 +211,11 @@ export class UndercoverGameView {
 
       ApiService.on('game_restarted', (data) => {
         if (data && data.game_state) {
+          if (data.room) {
+            AppState.setRoom(data.room);
+          } else if (data.session_scores && AppState.currentRoom) {
+            AppState.currentRoom.session_scores = data.session_scores;
+          }
           this.savedWord = null;
           this.savedRole = null;
           this.cacheMySecret(data.game_state);
@@ -644,9 +649,34 @@ export class UndercoverGameView {
     });
 
     // Game Over Actions
-    document.getElementById('btn-uc-rematch')?.addEventListener('click', () => {
-      ApiService.requestRematchSocket(this.roomCode, AppState.participantToken);
-      Toast.info('Đã gửi yêu cầu tái đấu!');
+    document.getElementById('btn-uc-rematch')?.addEventListener('click', async () => {
+      if (this.isLocal) {
+        try {
+          const res = await ApiService.restartGameRest(this.roomCode, AppState.participantToken);
+          if (res.success) {
+            Toast.success('Đã bắt đầu ván mới!');
+            if (res.room) {
+              AppState.setRoom(res.room);
+            }
+            this.savedWord = null;
+            this.savedRole = null;
+            this.cacheMySecret(res.room.game_state);
+            this.gameState = res.room.game_state;
+            this.stateVersion = res.room.state_version;
+            this.gameOverModalShown = false;
+            const overlay = document.getElementById('uc-gameover-overlay');
+            if (overlay) overlay.style.display = 'none';
+            this.updateUI();
+          } else {
+            Toast.error(res.error || 'Không thể bắt đầu lại');
+          }
+        } catch (e) {
+          Toast.error('Không thể chơi lại');
+        }
+      } else {
+        ApiService.requestRematchSocket(this.roomCode, AppState.participantToken);
+        Toast.info('Đã gửi yêu cầu tái đấu!');
+      }
     });
 
     document.getElementById('btn-uc-return-lobby')?.addEventListener('click', () => {
@@ -698,6 +728,9 @@ export class UndercoverGameView {
       try {
         const res = await ApiService.sendActionRest(this.roomCode, AppState.participantToken, action, this.stateVersion);
         if (res.success) {
+          if (res.room) {
+            AppState.setRoom(res.room);
+          }
           this.cacheMySecret(res.room.game_state);
           this.gameState = res.room.game_state;
           this.stateVersion = res.room.state_version;

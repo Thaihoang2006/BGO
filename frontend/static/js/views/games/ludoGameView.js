@@ -413,6 +413,9 @@ export class LudoGameView {
         const res = await ApiService.sendActionRest(this.roomCode, AppState.participantToken, action, this.stateVersion);
         if (res.success) {
           diceFaceEl?.classList.remove('rolling');
+          if (res.room) {
+            AppState.setRoom(res.room);
+          }
           this.gameState = res.room.game_state;
           this.stateVersion = res.room.state_version;
           this.renderGame();
@@ -438,6 +441,9 @@ export class LudoGameView {
       try {
         const res = await ApiService.sendActionRest(this.roomCode, AppState.participantToken, action, this.stateVersion);
         if (res.success) {
+          if (res.room) {
+            AppState.setRoom(res.room);
+          }
           this.gameState = res.room.game_state;
           this.stateVersion = res.room.state_version;
           this.renderGame();
@@ -459,9 +465,15 @@ export class LudoGameView {
         const res = await ApiService.restartGameRest(this.roomCode, AppState.participantToken);
         if (res.success) {
           Toast.success('Đã bắt đầu ván mới!');
+          if (res.room) {
+            AppState.setRoom(res.room);
+          }
+          this.gameOverModalShown = false;
           this.gameState = res.room.game_state;
           this.stateVersion = res.room.state_version;
           this.renderGame();
+        } else {
+          Toast.error(res.error || 'Không thể bắt đầu lại');
         }
       } catch (e) {
         Toast.error('Không thể chơi lại');
@@ -482,7 +494,7 @@ export class LudoGameView {
   }
 
   static showGameOverModal(winner) {
-    const scores = AppState.currentRoom?.session_scores || {};
+    const scores = AppState.currentRoom?.session_scores || this.gameState?.session_scores || {};
     const scoreText = `Tỉ số phiên: ${scores['0'] || 0} - ${scores['1'] || 0}`;
 
     const contentHtml = `
@@ -606,6 +618,11 @@ export class LudoGameView {
       if (data.room_code === this.roomCode) {
         const diceFaceEl = document.getElementById('ludo-dice-face');
         diceFaceEl?.classList.remove('rolling');
+        if (data.room) {
+          AppState.setRoom(data.room);
+        } else if (data.session_scores && AppState.currentRoom) {
+          AppState.currentRoom.session_scores = data.session_scores;
+        }
         this.gameState = data.game_state;
         this.stateVersion = data.state_version;
         this.renderGame();
@@ -618,9 +635,12 @@ export class LudoGameView {
     const onGameRestarted = (data) => {
       if (data.room_code === this.roomCode) {
         Toast.success('Cả hai đã đồng ý! Ván đấu bắt đầu lại!');
-        if (data.session_scores && AppState.currentRoom) {
+        if (data.room) {
+          AppState.setRoom(data.room);
+        } else if (data.session_scores && AppState.currentRoom) {
           AppState.currentRoom.session_scores = data.session_scores;
         }
+        this.gameOverModalShown = false;
         const btn = document.getElementById('btn-ludo-restart');
         if (btn) {
           btn.textContent = '🔄 Đấu Lại';

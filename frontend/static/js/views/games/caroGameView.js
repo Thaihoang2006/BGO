@@ -13,6 +13,7 @@ export class CaroGameView {
   static stateVersion = 0;
   static isLocal = false;
   static roomCode = null;
+  static gameOverModalShown = false;
 
   static async render(container, params = {}) {
     const roomCode = params.roomCode || AppState.roomCode;
@@ -22,6 +23,7 @@ export class CaroGameView {
     }
 
     this.roomCode = roomCode;
+    this.gameOverModalShown = false;
 
     // Fetch latest room data
     try {
@@ -288,7 +290,10 @@ export class CaroGameView {
           if (res.event?.board_expanded) {
             Toast.info(`Bàn cờ đã mở rộng (${res.event.rows}x${res.event.cols})!`);
           }
-          this.applyUpdate(res.room.game_state, res.room.state_version, res.room.winner);
+          if (res.room) {
+            AppState.setRoom(res.room);
+          }
+          this.applyUpdate(res.room.game_state, res.room.state_version, res.room.winner, res.room.session_scores);
         } else {
           Toast.error(res.error || 'Nước đi không hợp lệ');
           this.renderBoard();
@@ -301,20 +306,31 @@ export class CaroGameView {
     }
   }
 
-  static applyUpdate(newGameState, newVersion, winnerInfo = null) {
+  static applyUpdate(newGameState, newVersion, winnerInfo = null, sessionScores = null) {
     this.boardState = newGameState;
     this.stateVersion = newVersion;
+    if (sessionScores && AppState.currentRoom) {
+      AppState.currentRoom.session_scores = sessionScores;
+    }
+    if (newGameState && newGameState.session_scores && AppState.currentRoom) {
+      AppState.currentRoom.session_scores = newGameState.session_scores;
+    }
     this.renderBoard();
     this.updateHUD();
 
     if (this.boardState.status === 'finished') {
-      this.showGameOverModal(winnerInfo || this.boardState.winner);
+      if (!this.gameOverModalShown) {
+        this.gameOverModalShown = true;
+        this.showGameOverModal(winnerInfo || this.boardState.winner);
+      }
+    } else {
+      this.gameOverModalShown = false;
     }
   }
 
   static showGameOverModal(winner) {
     let contentHtml = '';
-    const scores = AppState.currentRoom?.session_scores || {};
+    const scores = AppState.currentRoom?.session_scores || this.boardState?.session_scores || {};
     const scoreText = `Tỉ số trận đấu: ${scores['0'] || 0} - ${scores['1'] || 0}`;
 
     if (!winner || winner.win_reason === 'draw') {
@@ -415,7 +431,11 @@ export class CaroGameView {
         const res = await ApiService.restartGameRest(this.roomCode, AppState.participantToken);
         if (res.success) {
           Toast.success('Đã bắt đầu ván mới!');
-          this.applyUpdate(res.room.game_state, res.room.state_version, null);
+          if (res.room) {
+            AppState.setRoom(res.room);
+          }
+          this.gameOverModalShown = false;
+          this.applyUpdate(res.room.game_state, res.room.state_version, null, res.room.session_scores);
         } else {
           Toast.error(res.error || 'Không thể bắt đầu lại');
         }
@@ -488,22 +508,30 @@ export class CaroGameView {
         if (data.event?.board_expanded) {
           Toast.info(`Bàn cờ đã mở rộng (${data.event.rows}x${data.event.cols})!`);
         }
-        this.applyUpdate(data.game_state, data.state_version, data.winner);
+        if (data.room) {
+          AppState.setRoom(data.room);
+        } else if (data.session_scores && AppState.currentRoom) {
+          AppState.currentRoom.session_scores = data.session_scores;
+        }
+        this.applyUpdate(data.game_state, data.state_version, data.winner, data.session_scores || data.room?.session_scores);
       }
     };
 
     const onGameRestarted = (data) => {
       if (data.room_code === this.roomCode) {
         Toast.success('Cả hai đã đồng ý! Ván đấu bắt đầu lại!');
-        if (data.session_scores && AppState.currentRoom) {
+        if (data.room) {
+          AppState.setRoom(data.room);
+        } else if (data.session_scores && AppState.currentRoom) {
           AppState.currentRoom.session_scores = data.session_scores;
         }
+        this.gameOverModalShown = false;
         const btn = document.getElementById('btn-in-game-restart');
         if (btn) {
           btn.textContent = '🔄 Đấu Lại';
           btn.disabled = false;
         }
-        this.applyUpdate(data.game_state, data.state_version, null);
+        this.applyUpdate(data.game_state, data.state_version, null, data.session_scores || data.room?.session_scores);
       }
     };
 

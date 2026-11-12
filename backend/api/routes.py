@@ -218,7 +218,9 @@ def post_game_action(room_code):
             "game_state": room.game_state,
             "event": event_data,
             "status": room.status,
-            "winner": room.winner
+            "winner": room.winner,
+            "session_scores": room.session_scores,
+            "room": room.to_dict()
         }, to=room.code)
         return jsonify({
             "success": True,
@@ -242,12 +244,14 @@ def restart_game_api(room_code):
             "state_version": room.state_version,
             "game_state": room.game_state,
             "status": room.status,
-            "session_scores": room.session_scores
+            "session_scores": room.session_scores,
+            "room": room.to_dict()
         }, to=room.code)
         return jsonify({
             "success": True,
             "room": room.to_dict(viewer_token=token),
-            "state_version": room.state_version
+            "state_version": room.state_version,
+            "session_scores": room.session_scores
         }), 200
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 400

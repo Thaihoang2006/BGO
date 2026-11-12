@@ -493,6 +493,11 @@ export class GemKingdomView {
     // Socket events
     const onGameUpdate = (data) => {
       if (data.room_code === this.roomCode) {
+        if (data.room) {
+          AppState.setRoom(data.room);
+        } else if (data.session_scores && AppState.currentRoom) {
+          AppState.currentRoom.session_scores = data.session_scores;
+        }
         this.gameState = data.game_state;
         this.stateVersion = data.state_version;
         this.renderGame();
@@ -502,9 +507,12 @@ export class GemKingdomView {
     const onGameRestarted = (data) => {
       if (data.room_code === this.roomCode) {
         Toast.success('Cả hai đã đồng ý! Ván đấu bắt đầu lại!');
-        if (data.session_scores && AppState.currentRoom) {
+        if (data.room) {
+          AppState.setRoom(data.room);
+        } else if (data.session_scores && AppState.currentRoom) {
           AppState.currentRoom.session_scores = data.session_scores;
         }
+        this.gameOverModalShown = false;
         const btn = document.getElementById('btn-gk-restart');
         if (btn) {
           btn.textContent = '🔄 Đấu Lại';
@@ -710,6 +718,9 @@ export class GemKingdomView {
       try {
         const res = await ApiService.sendActionRest(this.roomCode, AppState.participantToken, action, this.stateVersion);
         if (res.success) {
+          if (res.room) {
+            AppState.setRoom(res.room);
+          }
           this.gameState = res.room.game_state;
           this.stateVersion = res.room.state_version;
           this.renderGame();
@@ -729,6 +740,10 @@ export class GemKingdomView {
         const res = await ApiService.restartGameRest(this.roomCode, AppState.participantToken);
         if (res.success) {
           Toast.success('Đã bắt đầu ván mới!');
+          if (res.room) {
+            AppState.setRoom(res.room);
+          }
+          this.gameOverModalShown = false;
           this.gameState = res.room.game_state;
           this.stateVersion = res.room.state_version;
           this.renderGame();
@@ -755,7 +770,7 @@ export class GemKingdomView {
   }
 
   static showGameOverModal(winner) {
-    const scores = AppState.currentRoom?.session_scores || {};
+    const scores = AppState.currentRoom?.session_scores || this.gameState?.session_scores || {};
     const scoreText = `Tỉ số phiên: ${scores['0'] || 0} - ${scores['1'] || 0}`;
 
     const contentHtml = `
