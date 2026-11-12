@@ -1,0 +1,76 @@
+/* Rules Modal / View */
+.rules-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 225, 186, 0.15);
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.rules-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  color: var(--color-dusty-rose);
+  font-weight: 600;
+  font-size: 0.92rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.rules-tab-btn:hover {
+  color: var(--color-cream);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.rules-tab-btn.active {
+  background: rgba(255, 153, 102, 0.2);
+  color: var(--color-sunset-orange);
+  border: 1px solid rgba(255, 153, 102, 0.35);
+}
+
+.rule-section-block {
+  margin-bottom: 1.5rem;
+  background: rgba(25, 14, 21, 0.4);
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 225, 186, 0.08);
+}
+
+.rule-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-sunset-orange);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rule-section-content {
+  font-size: 0.92rem;
+  color: var(--color-cream-soft);
+  line-height: 1.6;
+}
+
+.rule-list {
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.rule-list li {
+  margin-bottom: 0.45rem;
+}
+
+.rule-tips-box {
+  background: rgba(255, 153, 102, 0.1);
+  border-left: 3px solid var(--color-sunset-orange);
+  padding: 0.9rem 1.1rem;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: 0.88rem;
+  color: var(--color-cream);
+  margin-top: 1rem;
+}

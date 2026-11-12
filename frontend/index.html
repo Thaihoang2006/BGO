@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BGO – Board Games Online</title>
+  <link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
+
+  <!-- Sunset Palette & Stylesheets -->
+  <link rel="stylesheet" href="/static/css/variables.css">
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/home.css">
+  <link rel="stylesheet" href="/static/css/lobby.css">
+  <link rel="stylesheet" href="/static/css/caro.css">
+  <link rel="stylesheet" href="/static/css/gem_kingdom.css">
+  <link rel="stylesheet" href="/static/css/ludo.css">
+  <link rel="stylesheet" href="/static/css/monopoly.css">
+  <link rel="stylesheet" href="/static/css/rules.css">
+  <link rel="stylesheet" href="/static/css/chat.css">
+  <link rel="stylesheet" href="/static/css/undercover.css">
+
+  <!-- Socket.IO Client (Local Bundle) -->
+  <script src="/static/js/socket.io.min.js"></script>
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <!-- Brand Logo -->
+      <div class="brand-logo" id="brand-logo-btn">
+        <div class="brand-icon">🎲</div>
+        <div class="brand-text">
+          <h1>BGO</h1>
+          <span>Board Games Online</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav>
+        <ul class="nav-links">
+          <li>
+            <button class="nav-link-btn active" data-view="home">
+              <span>🏠</span> Trang Chủ
+            </button>
+          </li>
+          <li>
+            <button class="nav-link-btn" data-view="game_select">
+              <span>🎮</span> Chọn Game
+            </button>
+          </li>
+          <li>
+            <button class="nav-link-btn" data-view="rules">
+              <span>📖</span> Luật Chơi
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Status Indicators & Room Pill -->
+      <div class="header-status">
+        <!-- Theme Toggle Button (Sunset / Citrus Mint) -->
+        <button class="btn btn-ghost btn-sm" id="btn-toggle-theme" style="border-radius: var(--radius-full); border: 1px solid var(--surface-glass-border); padding: 0.35rem 0.8rem; display: flex; align-items: center; gap: 0.4rem;" title="Đổi màu chủ đề (Sunset / Citrus Mint)">
+          <span id="theme-icon">🌅</span>
+          <span id="theme-text" style="font-size: 0.82rem; font-weight: 600;">Sunset</span>
+        </button>
+
+        <!-- Room Code Pill (hidden when not in room) -->
+        <div class="room-badge-pill" id="current-room-pill" style="display: none;" title="Bấm để sao chép mã phòng">
+          <span>📍</span>
+          <span id="current-room-text">BGO000</span>
+        </div>
+
+        <!-- Real-time Connection Indicator -->
+        <div class="connection-pill">
+          <div class="status-dot" id="connection-status-dot"></div>
+          <span id="connection-status-text">Trực tuyến</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Application Main Container -->
+  <main id="app-root" class="app-container">
+    <!-- Rendered dynamically by Router -->
+  </main>
+
+  <!-- Main JavaScript App Entry -->
+  <script type="module" src="/static/js/app.js"></script>
+</body>
+</html>

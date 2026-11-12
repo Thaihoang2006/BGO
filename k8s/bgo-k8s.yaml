@@ -1,0 +1,88 @@
+# ==============================================================================
+# BGO - Board Games Online (Kubernetes Manifest)
+# Namespace: bgo | Port: NodePort 30090
+# ==============================================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bgo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bgo-app
+  namespace: bgo
+  labels:
+    app: bgo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bgo
+  template:
+    metadata:
+      labels:
+        app: bgo
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - bgo
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: bgo
+        image: nthoang06/bgo:v2
+        imagePullPolicy: Always
+        env:
+        - name: PORT
+          value: "5000"
+        - name: HOST
+          value: "0.0.0.0"
+        - name: SECRET_KEY
+          value: "bgo-production-secret-key-cka2026"
+        ports:
+        - containerPort: 5000
+          name: http
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bgo-service
+  namespace: bgo
+  labels:
+    app: bgo
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    nodePort: 30090
+    name: http
+  selector:
+    app: bgo

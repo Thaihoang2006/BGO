@@ -1,0 +1,997 @@
+/* ============================================================
+   BGO Undercover Game View Styles
+   Theme: Sunset Minimal Glassmorphism matching BGO
+   ============================================================ */
+
+.undercover-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Header & Game Progress */
+.undercover-header {
+  background: var(--surface-glass);
+  border: 1px solid var(--surface-glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: var(--shadow-glass);
+}
+
+.undercover-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.undercover-game-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.undercover-badge-topic {
+  background: rgba(255, 153, 102, 0.15);
+  color: var(--color-sunset-orange);
+  border: 1px solid rgba(255, 153, 102, 0.4);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.undercover-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.undercover-round-pill {
+  background: rgba(121, 84, 99, 0.35);
+  border: 1px solid rgba(190, 128, 125, 0.4);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-cream);
+}
+
+.undercover-phase-pill {
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.undercover-phase-pill.secret_reveal {
+  background: rgba(183, 148, 244, 0.2);
+  color: #B794F4;
+  border: 1px solid rgba(183, 148, 244, 0.4);
+}
+
+.undercover-phase-pill.describe {
+  background: rgba(79, 209, 197, 0.2);
+  color: #4FD1C5;
+  border: 1px solid rgba(79, 209, 197, 0.4);
+  animation: pulseDescribe 1.5s infinite;
+}
+
+.undercover-phase-pill.discuss {
+  background: rgba(246, 173, 85, 0.2);
+  color: #F6AD55;
+  border: 1px solid rgba(246, 173, 85, 0.4);
+}
+
+.undercover-phase-pill.vote {
+  background: rgba(252, 129, 129, 0.2);
+  color: #FC8181;
+  border: 1px solid rgba(252, 129, 129, 0.4);
+  animation: pulseDescribe 1.2s infinite;
+}
+
+.undercover-phase-pill.mrwhite_guess {
+  background: rgba(255, 215, 0, 0.2);
+  color: #FFD700;
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  animation: pulseDescribe 1s infinite;
+}
+
+.undercover-phase-pill.finished {
+  background: rgba(104, 211, 145, 0.2);
+  color: #68D391;
+  border: 1px solid rgba(104, 211, 145, 0.4);
+}
+
+@keyframes pulseDescribe {
+  0% { box-shadow: 0 0 0 0 rgba(255, 153, 102, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(255, 153, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 153, 102, 0); }
+}
+
+/* Spectator Watcher Banner */
+.undercover-spectator-banner {
+  background: rgba(74, 85, 104, 0.35);
+  border: 1px dashed rgba(160, 174, 192, 0.5);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  color: #E2E8F0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Player Secret Card View */
+.undercover-secret-card-box {
+  background: linear-gradient(135deg, rgba(37, 22, 32, 0.9), rgba(49, 31, 42, 0.95));
+  border: 1.5px solid rgba(255, 153, 102, 0.45);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.undercover-secret-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.undercover-secret-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-dusty-rose);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.undercover-secret-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 225, 186, 0.1);
+}
+
+.undercover-word-display {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--color-sunset-orange);
+  letter-spacing: 1px;
+}
+
+.undercover-word-hidden {
+  font-size: 1.1rem;
+  color: rgba(255, 225, 186, 0.5);
+  font-style: italic;
+}
+
+.btn-toggle-secret {
+  background: rgba(255, 153, 102, 0.2);
+  border: 1px solid var(--color-sunset-orange);
+  color: var(--color-cream);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-toggle-secret:hover {
+  background: var(--color-sunset-orange);
+  color: #251620;
+}
+
+/* Hotseat Privacy Shield Modal */
+.undercover-privacy-shield {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 10, 16, 0.95);
+  backdrop-filter: blur(12px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.undercover-shield-modal {
+  background: linear-gradient(135deg, #251620, #361f2f);
+  border: 2px solid rgba(255, 153, 102, 0.5);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 2rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.undercover-shield-icon {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.undercover-shield-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--color-cream);
+}
+
+.undercover-shield-player {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--color-sunset-orange);
+}
+
+.undercover-shield-secret-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(255, 153, 102, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.btn-shield-action {
+  background: linear-gradient(135deg, var(--color-sunset-orange), #BE807D);
+  color: #251620;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 0.85rem 1.75rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 153, 102, 0.4);
+  transition: all 0.2s ease;
+}
+
+.btn-shield-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 153, 102, 0.6);
+}
+
+/* Two Columns: Game Arena & Players */
+.undercover-game-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .undercover-game-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Column: Board & Speech Bubbles */
+.undercover-board-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.undercover-active-turn-banner {
+  background: linear-gradient(135deg, rgba(255, 153, 102, 0.15), rgba(190, 128, 125, 0.15));
+  border: 1.5px solid rgba(255, 153, 102, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 1.15rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.undercover-turn-info {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.undercover-speaker-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #251620;
+  font-size: 1.1rem;
+  border: 2px solid #FFFFFF;
+}
+
+.undercover-speaker-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-cream);
+}
+
+.undercover-timer-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--color-sunset-orange);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+}
+
+/* Description Input Form */
+.undercover-input-box {
+  background: var(--surface-glass);
+  border: 1px solid var(--surface-glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.undercover-input-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.undercover-desc-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--surface-glass-border-bright);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  color: var(--color-cream);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.undercover-desc-input:focus {
+  border-color: var(--color-sunset-orange);
+}
+
+.btn-undercover-submit {
+  background: linear-gradient(135deg, var(--color-sunset-orange), #BE807D);
+  color: #251620;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0 1.5rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-undercover-submit:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.btn-undercover-pass {
+  background: transparent;
+  color: var(--color-dusty-rose);
+  border: 1px solid rgba(190, 128, 125, 0.4);
+  border-radius: var(--radius-md);
+  padding: 0 1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-undercover-pass:hover {
+  background: rgba(190, 128, 125, 0.15);
+}
+
+/* Descriptions History Board */
+.undercover-descriptions-board {
+  background: var(--surface-glass);
+  border: 1px solid var(--surface-glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.undercover-board-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.undercover-bubble-item {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-md);
+  border-left: 3.5px solid var(--color-sunset-orange);
+}
+
+.undercover-bubble-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #251620;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.undercover-bubble-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.undercover-bubble-author {
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.undercover-bubble-text {
+  font-size: 0.95rem;
+  color: var(--color-cream);
+  line-height: 1.4;
+}
+
+/* Voting Ballot */
+.undercover-voting-ballot {
+  background: linear-gradient(135deg, rgba(37, 22, 32, 0.9), rgba(49, 31, 42, 0.95));
+  border: 1.5px solid rgba(252, 129, 129, 0.5);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.undercover-ballot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.undercover-ballot-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #FC8181;
+}
+
+.undercover-revote-alert {
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  color: #FFD700;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.undercover-candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+
+.undercover-candidate-btn {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1.5px solid rgba(255, 225, 186, 0.2);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-cream);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.undercover-candidate-btn:hover:not(:disabled) {
+  border-color: #FC8181;
+  background: rgba(252, 129, 129, 0.15);
+  transform: translateY(-2px);
+}
+
+.undercover-candidate-btn.selected {
+  border-color: #FC8181;
+  background: rgba(252, 129, 129, 0.3);
+  box-shadow: 0 0 12px rgba(252, 129, 129, 0.4);
+}
+
+.undercover-candidate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mr White Guess Phase */
+.undercover-mrwhite-modal {
+  background: linear-gradient(135deg, rgba(37, 22, 32, 0.95), rgba(49, 31, 42, 0.98));
+  border: 2px solid #FFD700;
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.undercover-mrwhite-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #FFD700;
+}
+
+/* Right Column: Players List */
+.undercover-players-panel {
+  background: var(--surface-glass);
+  border: 1px solid var(--surface-glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.undercover-panel-header {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.undercover-players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.undercover-player-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 225, 186, 0.1);
+  transition: all 0.2s;
+}
+
+.undercover-player-item.is-speaking {
+  border-color: #4FD1C5;
+  background: rgba(79, 209, 197, 0.12);
+}
+
+.undercover-player-item.is-eliminated {
+  opacity: 0.45;
+  filter: grayscale(0.8);
+}
+
+.undercover-player-info-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.undercover-player-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-cream);
+}
+
+.undercover-player-status-right {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.badge-undercover-role {
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.badge-undercover-role.civilian {
+  background: rgba(79, 209, 197, 0.2);
+  color: #4FD1C5;
+}
+
+.badge-undercover-role.undercover {
+  background: rgba(252, 129, 129, 0.2);
+  color: #FC8181;
+}
+
+.badge-undercover-role.mr_white {
+  background: rgba(255, 215, 0, 0.2);
+  color: #FFD700;
+}
+
+/* Winner & Game Over Modal */
+.undercover-gameover-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 10, 16, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.undercover-gameover-card {
+  background: linear-gradient(135deg, #251620, #361f2f);
+  border: 2px solid rgba(255, 153, 102, 0.6);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  max-width: 620px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.undercover-winner-banner {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--color-sunset-orange);
+}
+
+.undercover-reveal-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
+.undercover-reveal-table th,
+.undercover-reveal-table td {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 225, 186, 0.1);
+  text-align: left;
+}
+
+.undercover-reveal-table th {
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--color-dusty-rose);
+  font-weight: 800;
+}
+
+.undercover-gameover-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-gameover-action {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-gameover-rematch {
+  background: linear-gradient(135deg, var(--color-sunset-orange), #BE807D);
+  color: #251620;
+}
+
+.btn-gameover-rematch:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 153, 102, 0.5);
+}
+
+.btn-gameover-lobby {
+  background: transparent;
+  color: var(--color-cream);
+  border: 1.5px solid var(--surface-glass-border-bright);
+}
+
+.btn-gameover-lobby:hover {
+  background: rgba(255, 225, 186, 0.1);
+}
+
+.btn-gameover-home {
+  background: transparent;
+  color: var(--color-dusty-rose);
+  border: 1px solid rgba(190, 128, 125, 0.4);
+}
+
+.btn-gameover-home:hover {
+  background: rgba(190, 128, 125, 0.15);
+}
+
+/* ============================================================
+   Image 2 Design: Columns View for Undercover Players
+   ============================================================ */
+.undercover-my-secret-banner {
+  background: linear-gradient(135deg, rgba(49, 31, 42, 0.95), rgba(37, 22, 32, 0.9));
+  border: 1.5px solid rgba(255, 153, 102, 0.5);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.uc-secret-tag {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--color-dusty-rose);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.uc-secret-main-word {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--color-sunset-orange);
+  letter-spacing: 0.5px;
+}
+
+.uc-secret-role-tag {
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  background: rgba(79, 209, 197, 0.15);
+  color: #4FD1C5;
+  border: 1px solid rgba(79, 209, 197, 0.4);
+}
+
+.uc-secret-role-tag.undercover {
+  background: rgba(252, 129, 129, 0.15);
+  color: #FC8181;
+  border-color: rgba(252, 129, 129, 0.4);
+}
+
+.uc-secret-role-tag.mr_white {
+  background: rgba(255, 215, 0, 0.15);
+  color: #FFD700;
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.undercover-active-my-turn-bar {
+  background: rgba(255, 153, 102, 0.12);
+  border: 1.5px solid var(--color-sunset-orange);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: 0 0 20px rgba(255, 153, 102, 0.25);
+  animation: pulseDescribe 2s infinite;
+}
+
+.undercover-waiting-turn-bar {
+  background: rgba(37, 22, 32, 0.8);
+  border: 1px solid var(--surface-glass-border);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--color-cream);
+  font-size: 0.95rem;
+}
+
+.undercover-vote-status-bar {
+  background: rgba(252, 129, 129, 0.15);
+  border: 1.5px solid rgba(252, 129, 129, 0.6);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  animation: pulseDescribe 1.5s infinite;
+}
+
+.undercover-timer-badge {
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--color-sunset-orange);
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 153, 102, 0.3);
+}
+
+/* Columns Grid (Side by side matching image 2) */
+.undercover-players-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.undercover-column-card {
+  background: rgba(37, 22, 32, 0.85);
+  border: 1.5px solid var(--surface-glass-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  min-height: 380px;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.undercover-column-card.is-speaking {
+  border-color: var(--color-sunset-orange);
+  box-shadow: 0 0 22px rgba(255, 153, 102, 0.45);
+  transform: translateY(-2px);
+}
+
+.undercover-column-card.is-eliminated {
+  opacity: 0.55;
+  filter: grayscale(0.5);
+  background: rgba(20, 12, 18, 0.7);
+}
+
+.undercover-column-card.is-me {
+  border-left-width: 4px;
+}
+
+.column-card-header {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.column-player-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1rem;
+  color: #251620;
+  flex-shrink: 0;
+}
+
+.column-player-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.column-player-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-cream);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.column-player-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+  flex-wrap: wrap;
+}
+
+.status-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.status-badge.alive {
+  background: rgba(79, 209, 197, 0.15);
+  color: #4FD1C5;
+}
+
+.status-badge.speaking {
+  background: rgba(255, 153, 102, 0.2);
+  color: var(--color-sunset-orange);
+}
+
+.status-badge.eliminated {
+  background: rgba(252, 129, 129, 0.2);
+  color: #FC8181;
+}
+
+.status-badge.votes {
+  background: rgba(183, 148, 244, 0.25);
+  color: #D6BCFA;
+}
+
+.column-card-body {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.column-desc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--color-cream);
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.desc-round-num {
+  font-weight: 800;
+  color: var(--color-sunset-orange);
+  flex-shrink: 0;
+}
+
+.desc-text {
+  word-break: break-word;
+}
+
+.column-card-footer {
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-top: 1px solid rgba(255, 225, 186, 0.08);
+  text-align: center;
+}

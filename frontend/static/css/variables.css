@@ -1,0 +1,94 @@
+:root {
+  /* Default: Official BGO Sunset Palette */
+  --color-cream: #FFE1BA;
+  --color-sunset-orange: #FF9966;
+  --color-dusty-rose: #BE807D;
+  --color-mauve: #795463;
+  --color-dark-plum: #251620;
+
+  /* Accent Variations */
+  --color-sunset-orange-glow: rgba(255, 153, 102, 0.4);
+  --color-cream-soft: rgba(255, 225, 186, 0.85);
+  --color-dusty-rose-soft: rgba(190, 128, 125, 0.65);
+  --color-mauve-dark: #583b48;
+  --color-dark-plum-deep: #190e15;
+
+  /* Glassmorphism Surfaces */
+  --bg-primary-gradient: radial-gradient(circle at 15% 20%, rgba(255, 153, 102, 0.15) 0%, transparent 40%),
+                         radial-gradient(circle at 85% 80%, rgba(190, 128, 125, 0.18) 0%, transparent 45%),
+                         linear-gradient(135deg, #190e15 0%, #251620 35%, #3d2433 70%, #251620 100%);
+  
+  --surface-glass-card: rgba(37, 22, 32, 0.75);
+  --surface-glass-card-hover: rgba(121, 84, 99, 0.35);
+  --surface-glass-border: rgba(255, 225, 186, 0.18);
+  --surface-glass-border-bright: rgba(255, 153, 102, 0.45);
+  --surface-modal: rgba(25, 14, 21, 0.88);
+
+  /* Status Colors */
+  --color-success: #67c295;
+  --color-warning: #f1b34e;
+  --color-danger: #ea6b6b;
+  --color-info: #78a9f0;
+
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-glow-orange: 0 0 24px rgba(255, 153, 102, 0.35);
+  --shadow-glow-cream: 0 0 24px rgba(255, 225, 186, 0.35);
+
+  /* Typography */
+  --font-family-base: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-display: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* Borders & Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Theme 2: Citrus Mint Summer Fruit Palette (From Reference Image 3) */
+[data-theme="citrus-mint"] {
+  --color-cream: #FCE49E;         /* Pale Butter / Lemon Cream */
+  --color-sunset-orange: #F9B208;  /* Zesty Citrus Gold */
+  --color-dusty-rose: #F7A072;     /* Peach / Papaya */
+  --color-mauve: #23585F;          /* Deep Mint Teal */
+  --color-dark-plum: #0E272A;      /* Dark Forest Teal */
+
+  --color-sunset-orange-glow: rgba(249, 178, 8, 0.45);
+  --color-cream-soft: rgba(252, 228, 158, 0.88);
+  --color-dusty-rose-soft: rgba(247, 160, 114, 0.7);
+  --color-mauve-dark: #163B40;
+  --color-dark-plum-deep: #091C1E;
+
+  /* Additional fruit accents */
+  --color-strawberry: #EE3E2B;     /* Strawberry Red */
+  --color-lime: #9BC53D;           /* Fresh Kiwi / Lime */
+  --color-mint-aqua: #98D8D8;      /* Mint Blue / Aqua */
+
+  /* Glassmorphism Surfaces */
+  --bg-primary-gradient: radial-gradient(circle at 15% 20%, rgba(249, 178, 8, 0.2) 0%, transparent 40%),
+                         radial-gradient(circle at 85% 80%, rgba(155, 197, 61, 0.22) 0%, transparent 45%),
+                         radial-gradient(circle at 50% 50%, rgba(152, 216, 216, 0.12) 0%, transparent 60%),
+                         linear-gradient(135deg, #091C1E 0%, #0E272A 35%, #18474D 70%, #0E272A 100%);
+
+  --surface-glass-card: rgba(14, 39, 42, 0.82);
+  --surface-glass-card-hover: rgba(35, 88, 95, 0.4);
+  --surface-glass-border: rgba(252, 228, 158, 0.22);
+  --surface-glass-border-bright: rgba(249, 178, 8, 0.55);
+  --surface-modal: rgba(9, 28, 30, 0.92);
+
+  --color-success: #9BC53D;
+  --color-warning: #F9B208;
+  --color-danger: #EE3E2B;
+  --color-info: #98D8D8;
+
+  --shadow-glow-orange: 0 0 24px rgba(249, 178, 8, 0.45);
+  --shadow-glow-cream: 0 0 24px rgba(252, 228, 158, 0.45);
+}

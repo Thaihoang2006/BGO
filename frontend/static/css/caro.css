@@ -1,0 +1,383 @@
+/* Caro (Gomoku) 15x15 Board Styling */
+.game-play-container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Match Header & Turn Indicator */
+.match-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.match-room-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.match-game-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-cream);
+}
+
+.match-mode-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: rgba(121, 84, 99, 0.4);
+  color: var(--color-cream-soft);
+  border: 1px solid rgba(255, 225, 186, 0.2);
+}
+
+.match-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Turn Banner */
+.turn-banner {
+  padding: 0.85rem 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius-md);
+  background: rgba(37, 22, 32, 0.8);
+  border: 1px solid var(--surface-glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  transition: all var(--transition-normal);
+}
+
+.turn-banner.active-turn-glow {
+  border-color: var(--color-sunset-orange);
+  box-shadow: 0 0 20px rgba(255, 153, 102, 0.25);
+}
+
+.turn-indicator-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  animation: pulseGlow 1.8s infinite;
+}
+
+.turn-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* Player VS Area */
+.players-hud {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.player-hud-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: rgba(121, 84, 99, 0.15);
+  border: 1px solid rgba(255, 225, 186, 0.1);
+  transition: all var(--transition-normal);
+}
+
+.player-hud-card.is-turn {
+  background: rgba(255, 153, 102, 0.15);
+  border-color: var(--color-sunset-orange);
+  box-shadow: var(--shadow-glow-orange);
+}
+
+.hud-stone-symbol {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.hud-player-details h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hud-player-details span {
+  font-size: 0.8rem;
+  color: var(--color-dusty-rose);
+}
+
+.vs-divider {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-dusty-rose);
+  padding: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .players-hud {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .vs-divider {
+    display: none;
+  }
+}
+
+/* Caro Board Canvas / Grid */
+.board-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0 auto 2rem;
+  max-width: 98vw;
+  max-height: 72vh;
+  overflow: auto;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  background: rgba(37, 22, 32, 0.4);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-mauve) transparent;
+}
+
+.caro-board {
+  position: relative;
+  background: #251620;
+  border: 3px solid rgba(255, 225, 186, 0.35);
+  border-radius: var(--radius-md);
+  box-shadow: 
+    0 12px 36px rgba(0, 0, 0, 0.6),
+    inset 0 0 25px rgba(0, 0, 0, 0.4);
+  display: grid;
+  touch-action: manipulation;
+  user-select: none;
+  overflow: hidden;
+  margin: auto;
+}
+
+[data-theme="citrus-mint"] .caro-board {
+  background: #162c26;
+  border-color: rgba(252, 228, 158, 0.4);
+}
+
+/* Individual Square Cell (ô vuông bàn cờ) */
+.caro-cell {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255, 225, 186, 0.18);
+  border-bottom: 1px solid rgba(255, 225, 186, 0.18);
+  transition: background-color 0.15s ease;
+}
+
+[data-theme="citrus-mint"] .caro-cell {
+  border-right-color: rgba(252, 228, 158, 0.2);
+  border-bottom-color: rgba(252, 228, 158, 0.2);
+}
+
+/* Session Score Styles */
+.session-score-pill {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 153, 102, 0.2);
+  color: var(--color-sunset-orange);
+  border: 1px solid rgba(255, 153, 102, 0.3);
+}
+
+.session-score-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.score-display-box {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--color-cream);
+  padding: 0.2rem 0.8rem;
+  background: rgba(37, 22, 32, 0.7);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--surface-glass-border);
+  letter-spacing: 2px;
+}
+
+/* Hover on empty cell highlights the whole square */
+.caro-cell.hover-preview:hover {
+  background-color: rgba(255, 153, 102, 0.22);
+}
+
+[data-theme="citrus-mint"] .caro-cell.hover-preview:hover {
+  background-color: rgba(252, 228, 158, 0.22);
+}
+
+/* Ghost box preview inside the square */
+.caro-cell.hover-preview:hover::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  border-radius: 6px;
+  border: 1.5px dashed var(--color-sunset-orange);
+  background: rgba(255, 153, 102, 0.15);
+  pointer-events: none;
+}
+
+[data-theme="citrus-mint"] .caro-cell.hover-preview:hover::after {
+  border-color: var(--color-citrus-orange);
+  background: rgba(247, 146, 86, 0.18);
+}
+
+/* Landmark reference dots (Hoshipoints) */
+.caro-cell.star-point::before {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: var(--color-sunset-orange);
+  border-radius: 50%;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+[data-theme="citrus-mint"] .caro-cell.star-point::before {
+  background: var(--color-citrus-orange);
+}
+
+/* Placed Piece inside the square cell */
+.caro-piece {
+  position: relative;
+  z-index: 5;
+  width: 82%;
+  height: 82%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-family: 'Baloo 2', 'Segoe UI', system-ui, sans-serif;
+  font-size: clamp(0.95rem, 3.2vw, 1.45rem);
+  line-height: 1;
+  border-radius: 6px;
+  animation: dropPiece 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  user-select: none;
+}
+
+@keyframes dropPiece {
+  0% { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.piece-x {
+  color: #FF9966;
+  background: rgba(255, 153, 102, 0.18);
+  border: 1.5px solid rgba(255, 153, 102, 0.55);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 6px rgba(255, 153, 102, 0.25);
+  text-shadow: 0 0 8px rgba(255, 153, 102, 0.6);
+}
+
+.piece-o {
+  color: #FFE1BA;
+  background: rgba(255, 225, 186, 0.18);
+  border: 1.5px solid rgba(255, 225, 186, 0.55);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 6px rgba(255, 225, 186, 0.25);
+  text-shadow: 0 0 8px rgba(255, 225, 186, 0.6);
+}
+
+[data-theme="citrus-mint"] .piece-x {
+  color: #ff5a36;
+  background: rgba(255, 90, 54, 0.2);
+  border-color: rgba(255, 90, 54, 0.6);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 6px rgba(255, 90, 54, 0.3);
+  text-shadow: 0 0 8px rgba(255, 90, 54, 0.6);
+}
+
+[data-theme="citrus-mint"] .piece-o {
+  color: #38d9a9;
+  background: rgba(56, 217, 169, 0.2);
+  border-color: rgba(56, 217, 169, 0.6);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 6px rgba(56, 217, 169, 0.3);
+  text-shadow: 0 0 8px rgba(56, 217, 169, 0.6);
+}
+
+/* Last move indicator */
+.caro-piece.last-move-marker {
+  box-shadow: 0 0 0 2px var(--color-sunset-orange), 0 4px 12px rgba(255, 153, 102, 0.5);
+}
+
+/* Winning piece highlight */
+.caro-piece.winning-piece {
+  box-shadow: 0 0 16px #ffea78, inset 0 0 8px #ffffff;
+  border-color: #ffffff;
+  background: rgba(255, 234, 120, 0.35);
+  animation: winGlow 0.9s ease-in-out infinite alternate;
+  z-index: 10;
+}
+
+@keyframes winGlow {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); filter: brightness(1.25); }
+}
+
+/* Victory Announcement Banner */
+.victory-modal-content {
+  text-align: center;
+  padding: 1.5rem 0.5rem;
+}
+
+.victory-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  animation: bounceWinner 1s infinite alternate;
+}
+
+@keyframes bounceWinner {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+.victory-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-cream);
+  margin-bottom: 0.5rem;
+}
+
+.victory-detail {
+  font-size: 1.05rem;
+  color: var(--color-sunset-orange);
+  margin-bottom: 1.75rem;
+}
+
+.victory-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}

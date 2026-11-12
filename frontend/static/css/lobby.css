@@ -1,0 +1,268 @@
+/* Game Mode Selection & Lobby Views */
+.lobby-container {
+  max-width: 760px;
+  margin: 1.5rem auto 3rem;
+}
+
+.lobby-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.lobby-header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-cream);
+  margin-bottom: 0.5rem;
+}
+
+.lobby-header p {
+  color: var(--color-dusty-rose);
+  font-size: 1rem;
+}
+
+/* Mode Selection Cards */
+.mode-selection-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+  .mode-selection-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mode-card {
+  padding: 2rem 1.75rem;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--transition-normal);
+}
+
+.mode-card:hover, .mode-card.selected {
+  border-color: var(--color-sunset-orange);
+  background: rgba(255, 153, 102, 0.12);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow-orange);
+}
+
+.mode-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.mode-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-cream);
+}
+
+.mode-card p {
+  font-size: 0.88rem;
+  color: var(--color-cream-soft);
+  line-height: 1.5;
+}
+
+/* Local Player Setup Form */
+.setup-form-panel {
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-cream-soft);
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(25, 14, 21, 0.6);
+  border: 1px solid var(--surface-glass-border);
+  border-radius: var(--radius-md);
+  padding: 0.8rem 1.2rem;
+  color: var(--color-cream);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.form-input:focus {
+  border-color: var(--color-sunset-orange);
+  box-shadow: 0 0 16px rgba(255, 153, 102, 0.25);
+}
+
+.player-config-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.2rem;
+  background: rgba(25, 14, 21, 0.4);
+  border: 1px solid rgba(255, 225, 186, 0.1);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.75rem;
+}
+
+.player-color-preview {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--color-dark-plum);
+}
+
+/* Online Lobby Room View */
+.room-code-display {
+  background: rgba(25, 14, 21, 0.6);
+  border: 1px dashed var(--color-sunset-orange);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.room-code-display span {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-dusty-rose);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.room-code-number {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--color-sunset-orange);
+  text-shadow: 0 0 20px rgba(255, 153, 102, 0.5);
+  font-family: monospace;
+}
+
+.copy-btn {
+  margin-top: 0.75rem;
+}
+
+/* Players In Lobby List */
+.lobby-players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.lobby-player-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: rgba(121, 84, 99, 0.2);
+  border: 1px solid rgba(255, 225, 186, 0.12);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.player-info-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.player-avatar-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  border: 2px solid rgba(255, 225, 186, 0.3);
+}
+
+.player-name-wrapper h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.host-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 153, 102, 0.25);
+  color: var(--color-sunset-orange);
+  border: 1px solid var(--color-sunset-orange);
+}
+
+.you-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 225, 186, 0.2);
+  color: var(--color-cream);
+}
+
+.player-status-badge {
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.status-ready {
+  background: rgba(103, 194, 149, 0.2);
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.status-waiting {
+  background: rgba(241, 179, 78, 0.2);
+  border: 1px solid var(--color-warning);
+  color: var(--color-warning);
+}
+
+/* Empty slot */
+.lobby-empty-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border: 1px dashed rgba(255, 225, 186, 0.15);
+  border-radius: var(--radius-md);
+  color: var(--color-dusty-rose);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Lobby actions */
+.lobby-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
